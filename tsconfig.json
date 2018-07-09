@@ -9,6 +9,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false, // 关闭属性必须设置初始值选项, 与 vuex @State之类注解有冲突
     "sourceMap": true,
     "baseUrl": ".",
     "types": [

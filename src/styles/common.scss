@@ -1,0 +1,23 @@
+@import "variables";
+
+// 标题文字
+.extra-title-text{
+  font-size: 24px;
+  color: lighten($--color-black, 25%);
+  line-height: 32px;
+  font-weight: 500;
+}
+
+// 链接
+.link{
+  cursor: pointer;
+}
+
+// 分割线
+.divider::after{
+  display: block;
+  height: 1px;
+  width: 100%;
+  content: " ";
+  background: $--border-color-base;
+}
