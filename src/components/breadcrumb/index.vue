@@ -9,7 +9,7 @@
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator'
 
-const routes: any = {
+const routes : any = {
   home: '首页',
   dashboard: 'Dashboard'
 }

@@ -16,18 +16,18 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator'
-import {ElForm} from 'element-ui/types/form'
-
-class Form {
-  username: string = '';
-  password: string = '';
-}
+import {setToken} from '../../http/auth-token'
+import {login} from '../../api/auth'
+import {AppModule} from '@/store/index'
 
 @Component({
   components: {},
   })
 export default class LoginBoxForm extends Vue {
-  form: Form = new Form()
+  form = {
+    username: '',
+    password: ''
+  }
   loading: boolean = false
   rules: any = {
     username: [
@@ -38,13 +38,21 @@ export default class LoginBoxForm extends Vue {
     ]
   }
 
-  onSubmit (): void {
+  async onSubmit (): Promise<any> {
     if (!this.valid()) return
     this.loading = true
-    window.setTimeout(() => {
+    this.submit(this.form.username, this.form.password).then(() => {
+      const fn = () => { this.loading = false }
+      let targetUrl = this.$auth.targetUrl || '/'
+      this.$auth.clear()
+      this.$router.push(targetUrl, fn, fn)
+    }).catch(() => {
       this.loading = false
-      this.$router.push('/')
-    }, 3000)
+    })
+  }
+  async submit (username: string, password: string) : Promise<any> {
+    let token = await login(username, password)
+    if (token) setToken(token)
   }
   valid (): boolean {
     if (!this.form.username.trim()) {

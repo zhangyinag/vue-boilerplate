@@ -5,9 +5,9 @@
            <img class="avatar__img" src="~@/assets/avatar.png">
         </span>
         <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item divided>Alison/艾丽森</el-dropdown-item>
+            <el-dropdown-item divided>{{$auth.user.username}}/未知</el-dropdown-item>
             <el-dropdown-item divided>个人信息</el-dropdown-item>
-            <el-dropdown-item divided @click.native="$router.push('/login')">退出</el-dropdown-item>
+            <el-dropdown-item divided @click.native="logout">退出</el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
 </div>
@@ -15,11 +15,20 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator'
+import {logout} from '../../api/auth'
+import {setToken} from '../../http/auth-token'
 
 @Component({
   components: {},
   })
 export default class Avatar extends Vue {
+  logout (): void {
+    logout().then(() => {
+      this.$auth.user = null
+      setToken(null)
+      this.$router.push('/login')
+    })
+  }
 }
 </script>
 

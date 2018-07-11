@@ -1,0 +1,45 @@
+html, body{
+  margin: 0;
+  padding: 0;
+}
+.main{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.aside{
+  width: 20%;
+  border-right: #e2e2e2 solid 1px;
+  height: 100%;
+  overflow: auto;
+}
+
+.content{
+  flex-grow: 1;
+}
+
+.editor{
+  height: 25%;
+  border-bottom: 1px #e2e2e2 solid;
+  box-shadow: 2px 2px 2px #f8f8f8;
+  resize: vertical;
+  overflow: auto;
+}
+
+.list-group{
+  list-style: none;
+  padding: 0;
+}
+
+.list-group__item{
+  padding: 5px 20px;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.list-group__item:hover, .list-group__item.active{
+ background: #e2e2e2;
+}
