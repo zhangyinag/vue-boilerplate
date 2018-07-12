@@ -25,7 +25,7 @@ export default class AppAside extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~@/styles/mixins.scss";
 @import "~@/styles/variables.scss";
 @import "~@/styles/common.scss";

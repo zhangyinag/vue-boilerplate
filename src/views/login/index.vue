@@ -19,7 +19,7 @@ export default class Login extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     @import "~@/styles/mixins.scss";
     @import "~@/styles/utils.scss";
     @import "~@/styles/common.scss";
