@@ -1,5 +1,5 @@
 /* eslint-disable no-path-concat,quotes */
-const {copyDir} = require('../utils')
+const {copyDir, writeJson} = require('../utils')
 
 module.exports = api => {
   // preset plugins check
@@ -16,6 +16,12 @@ module.exports = api => {
 
   const dest = api.resolve('')
   copyDir(__dirname + '/template', dest)
+
+  // write value to tsconfig.json
+  writeJson(api.resolve('tsconfig.json'), function (data) {
+    data.compilerOptions.strictPropertyInitialization = false
+    return data
+  })
 
   const devDependencies = {
     "babel-plugin-transform-decorators-legacy": "^1.3.5",

@@ -1,5 +1,4 @@
 const rimraf = require('rimraf')
-const copy = require('graceful-copy')
 const fs = require('fs')
 const path = require('path')
 
@@ -15,14 +14,14 @@ const copyDir = function (src, dest) {
     travel(src, cb)
     resolve()
   })
-  function travel (dir, callback, rp) {
+  function travel (dir, callback, last) {
     fs.readdirSync(dir).forEach(function (file) {
       let pathname = path.join(dir, file)
-      rp = path.join(rp || '', file)
+      let current = path.join(last || '', file)
       if (fs.statSync(pathname).isDirectory()) {
-        travel(pathname, callback, rp)
+        travel(pathname, callback, current)
       } else {
-        callback(rp, pathname)
+        callback(current, pathname)
       }
     })
   }
@@ -40,7 +39,7 @@ const copyDir = function (src, dest) {
         dir = path.dirname(dir)
       }
       for (let i = dirs.length - 1; i >= 0; i--) {
-        fs.mkdirSync(dir[i])
+        fs.mkdirSync(dirs[i])
       }
     }
   }
@@ -71,4 +70,11 @@ function copyFile (src, dest) {
   })
 }
 
-module.exports = {copyFiles, copyDir, delDir}
+function writeJson (file, callback) {
+  let text = fs.readFileSync(file, 'utf-8')
+  let data = JSON.parse(text)
+  let result = JSON.stringify(callback(data), null, 2)
+  fs.writeFileSync(file, result, 'utf-8')
+}
+
+module.exports = {copyFiles, copyDir, delDir, writeJson}
