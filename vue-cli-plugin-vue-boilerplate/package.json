@@ -1,0 +1,49 @@
+{
+  "name": "vue-cli-plugin-vue-boilerplate",
+  "version": "1.0.0",
+  "description": "vue cli plugin of vue-boilerplate",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "node prepublish.js",
+    "pub": "npm --registry https://registry.npmjs.org/ && npm publish"
+  },
+  "keywords": [
+    "vue/cli",
+    "vue-boilerplate"
+  ],
+  "author": "zhangyin",
+  "license": "ISC",
+  "dependencies": {
+    "graceful-copy": "^1.1.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "body-parser": "^1.18.3",
+    "colors": "^1.3.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "lokijs": "^1.5.5",
+    "require-all": "^3.0.0",
+    "svg-sprite-loader": "^3.8.0",
+    "vuex-class": "^0.3.1"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.2",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "body-parser": "^1.18.3",
+    "colors": "^1.3.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "lokijs": "^1.5.5",
+    "require-all": "^3.0.0",
+    "svg-sprite-loader": "^3.8.0",
+    "babel-core": "^6.26.3",
+    "express-session": "^1.15.6",
+    "vuex-class": "^0.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhangyinag/vue-boilerplate.git"
+  }
+}
