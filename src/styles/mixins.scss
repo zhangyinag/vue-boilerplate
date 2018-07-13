@@ -1,11 +1,9 @@
-$element-separator: '__';
-$modifier-separator: '--';
-$state-prefix: 'is-';
+@import "function";
 
 /* BEM
  -------------------------- */
 @mixin b($block) {
-  $B: $block !global;
+  $B: $namespace+$block !global;
 
   .#{$B} {
     @content;
@@ -19,9 +17,20 @@ $state-prefix: 'is-';
   @each $unit in $element {
     $currentSelector: #{$currentSelector + "." + $B + $element-separator + $unit + ","};
   }
-  @at-root {
-    #{$currentSelector} {
-      @content;
+
+  @if hitAllSpecialNestRule($selector) {
+    @at-root {
+      #{$selector} {
+        #{$currentSelector} {
+          @content;
+        }
+      }
+    }
+  } @else {
+    @at-root {
+      #{$currentSelector} {
+        @content;
+      }
     }
   }
 }

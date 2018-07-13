@@ -20,7 +20,7 @@ export default class AppHeader extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~@/styles/mixins.scss";
 @import "~@/styles/variables.scss";
 

@@ -89,7 +89,7 @@ export default class Dashboard extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~@/styles/mixins.scss";
 @import "~@/styles/variables.scss";
 </style>
