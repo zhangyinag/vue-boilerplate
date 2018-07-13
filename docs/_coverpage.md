@@ -1,4 +1,4 @@
-![logo](favicon.ico ':size=64')
+![logo](logo.png ':size=64')
 
 # vue-biolerplate
 
@@ -10,4 +10,4 @@
 * `BEM` base on `SASS`.
 
 [GitHub](https://github.com/zhangyinag/vue-boilerplate)
-[Get Started](quick-start)
+[Get Started](quickstart.md)
