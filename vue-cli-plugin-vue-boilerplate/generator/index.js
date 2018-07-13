@@ -8,19 +8,24 @@ module.exports = api => {
     "@vue/cli-plugin-eslint",
     "@vue/cli-plugin-typescript",
     "@vue/eslint-config-standard",
-    "@vue/eslint-config-typescript"
+    "@vue/eslint-config-typescript",
+    "node-sass"
   ]
   plugins.forEach(v => {
     if (!api.hasPlugin(v)) throw new Error(`don't have dependency: ${v}, please check these dependencies:` + plugins)
   })
 
-  const dest = api.resolve('')
-  copyDir(__dirname + '/template', dest)
+  // warning: I'm not very sure it's appropriate to create files in this stage,
+  // but put it before will have git reverted
+  api.onCreateComplete(() => {
+    const dest = api.resolve('')
+    copyDir(__dirname + '/template', dest)
 
-  // write value to tsconfig.json
-  writeJson(api.resolve('tsconfig.json'), function (data) {
-    data.compilerOptions.strictPropertyInitialization = false
-    return data
+    // write value to tsconfig.json
+    writeJson(api.resolve('tsconfig.json'), function (data) {
+      data.compilerOptions.strictPropertyInitialization = false
+      return data
+    })
   })
 
   const devDependencies = {
