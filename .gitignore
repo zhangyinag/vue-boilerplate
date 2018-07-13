@@ -14,6 +14,10 @@ yarn-error.log*
 # test
 /tests/e2e/reports
 
+# plugin
+/vue-cli-plugin-vue-boilerplate/generator/template
+/vue-cli-plugin-vue-boilerplate/node_modules
+
 # Editor directories and files
 .idea
 .vscode

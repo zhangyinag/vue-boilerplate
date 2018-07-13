@@ -1,0 +1,24 @@
+{
+  "name": "vue-cli-plugin-vue-boilerplate",
+  "version": "1.0.2",
+  "description": "vue cli plugin of vue-boilerplate",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pub": "node prepublish.js && npm --registry https://registry.npmjs.org/ publish"
+  },
+  "keywords": [
+    "vue/cli",
+    "vue-boilerplate"
+  ],
+  "author": "zhangyin",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "rimraf": "^2.6.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhangyinag/vue-boilerplate.git"
+  }
+}
