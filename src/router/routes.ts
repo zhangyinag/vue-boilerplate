@@ -1,9 +1,9 @@
 import {RouteConfig} from 'vue-router/types/router'
 import Home from '@/views/Home.vue'
-import About from '@/views/About.vue'
 import Error from '@/views/error/index.vue'
 import Login from '@/views/login/index.vue'
 import Dashboard from '@/views/dashboard/index.vue'
+import User from '@/views/user/index.vue'
 
 export const routes: Array<RouteConfig> = [
   {
@@ -17,6 +17,12 @@ export const routes: Array<RouteConfig> = [
         name: 'dashboard',
         component: Dashboard,
         meta: {pid: 'home.dashboard'}
+      },
+      {
+        path: 'user',
+        name: 'user',
+        component: User,
+        meta: {pid: 'home.user'}
       }
     ]
   },
@@ -24,11 +30,6 @@ export const routes: Array<RouteConfig> = [
     path: '/login',
     name: 'login',
     component: Login
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: About
   },
   {
     path: '/error/:code',

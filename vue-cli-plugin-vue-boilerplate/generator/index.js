@@ -1,5 +1,5 @@
 /* eslint-disable no-path-concat,quotes */
-const {copyDir, writeJson} = require('../utils')
+const {copyDir, writeJson, delDir} = require('../utils')
 
 module.exports = api => {
   // preset plugins check
@@ -26,6 +26,9 @@ module.exports = api => {
       data.compilerOptions.strictPropertyInitialization = false
       return data
     })
+    // 删除 store.ts 与 router.ts
+    delDir(api.resolve('src/store.ts'))
+    delDir(api.resolve('src/router.ts'))
   })
 
   const devDependencies = {

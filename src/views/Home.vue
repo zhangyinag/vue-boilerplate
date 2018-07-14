@@ -5,7 +5,10 @@
     </div>
     <div class="layout-main">
       <div class="layout-header"><app-header></app-header></div>
-      <div class="layout-view"><router-view/></div>
+      <div class="layout-view">
+          <router-view/>
+          <jumbotron v-show="isHome"></jumbotron>
+      </div>
       <div class="layout-footer"><p> &nbsp; &nbsp; &nbsp; &nbsp;© 2018-2019 Pingan.com 版权所有 Email: zhangyinag@126.com</p></div>
     </div>
     <!--widget-->
@@ -17,14 +20,18 @@
 import { Component, Vue } from 'vue-property-decorator'
 import AppHeader from './header/index.vue'
 import AppAside from './aside/index.vue'
-import {AppModule} from '@/store/index'
+import {AppModule} from '@/store'
 import Feedback from '@/components/feedback/index.vue'
+import Jumbotron from '@/components/jumbotron/index.vue'
 
 @Component({
-  components: {AppHeader, AppAside, Feedback},
+  components: {AppHeader, AppAside, Feedback, Jumbotron},
   })
 export default class Home extends Vue {
   @AppModule.State asideExpand: boolean
+  get isHome () {
+    return this.$route.path === '/'
+  }
 }
 </script>
 

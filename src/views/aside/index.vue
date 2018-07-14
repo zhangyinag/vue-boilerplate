@@ -12,8 +12,7 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator'
-import AppMenu from '@/components/Menu.vue'
-import {Mutation, namespace} from 'vuex-class'
+import AppMenu from '@/components/menu/index.vue'
 import {AppModule} from '@/store/index'
 
 @Component({

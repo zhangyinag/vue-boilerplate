@@ -23,5 +23,15 @@ module.exports = [
     sid: 'ROLE_ADMIN',
     pid: 'home.dashboard',
     principal: false
+  },
+  {
+    sid: 'ROLE_ADMIN',
+    pid: 'home.user',
+    principal: false
+  },
+  {
+    sid: 'ROLE_ANONYMOUS',
+    pid: 'home',
+    principal: false
   }
 ]

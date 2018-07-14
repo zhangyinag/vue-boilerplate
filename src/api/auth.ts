@@ -1,4 +1,4 @@
-import http from '@/http/index'
+import {http} from '@/plugins'
 
 export declare interface User {
   username: string,
@@ -14,9 +14,9 @@ export function logout () {
 }
 
 export function loadUser () {
-  return http.get<User>('/user')
+  return http.get<User>('/auth')
 }
 
 export function loadAcl () {
-  return http.get<Array<string>>('/user/acl')
+  return http.get<Array<string>>('/auth/acl')
 }

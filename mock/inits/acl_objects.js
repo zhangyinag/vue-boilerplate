@@ -9,7 +9,13 @@ const tree = [
         pid: 'dashboard',
         name: 'Dashboard',
         description: null,
-        configurable: true,
+        configurable: true
+      },
+      {
+        pid: 'user',
+        name: 'user',
+        description: null,
+        configurable: true
       }
     ]
   }

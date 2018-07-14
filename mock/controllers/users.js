@@ -2,7 +2,7 @@ const Controller = require('../Controller')
 const Mapping = require('../Mapping')
 const RespError = require('../RespError')
 
-const tokenStorage = {}
+const {tokenStorage, enabled} = require('../token-service')
 
 module.exports = class users extends Controller {
   @Mapping({url: '/login', method: 'post'})
@@ -15,9 +15,12 @@ module.exports = class users extends Controller {
     //   console.error(err)
     // })
     req.session.user = user
-    let token = username + '-' + Date.now()
-    tokenStorage[username] = token
-    return token
+    if (enabled) {
+      let token = username + '-' + Date.now()
+      tokenStorage[username] = token
+      return token
+    }
+    return null
   }
 
   @Mapping({url: '/logout', method: 'post'})
@@ -27,19 +30,30 @@ module.exports = class users extends Controller {
     req.session.destroy()
   }
 
-  @Mapping({url: '/user', method: 'get'})
-  getUser (req, res) {
-    return req.session.user
+  @Mapping({url: '/auth', method: 'get'})
+  getAuth (req, res) {
+    return req.session.user || null
   }
 
-  @Mapping({url: '/user/acl', method: 'get'})
+  @Mapping({url: '/auth/acl', method: 'get'})
   getAcl (req, res) {
-    let roles = req.session && req.session.user && req.session.user.roles
+    let roles
+    if (!req.session.user) { // 匿名用户
+      roles = ['ROLE_ANONYMOUS']
+    } else {
+      roles = req.session && req.session.user && req.session.user.roles
+    }
     if (!Array.isArray(roles) || roles.length < 1) return []
     const acl = []
     roles.forEach(role => {
       acl.push(...this.getCollection('acl_entries').find({sid: role}).map(v => v.pid))
     })
     return acl
+  }
+
+  @Mapping({url: '/users', method: 'get'})
+  getUsers (req, res) {
+    const params = req.params || {}
+    return this.collection.find(params)
   }
 }

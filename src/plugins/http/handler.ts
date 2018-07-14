@@ -1,9 +1,8 @@
 import {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios'
 import { message, confirm } from './ui'
 import router from '@/router'
-import {TransError, transform} from '@/http/transformer'
-import {enabled, getToken, tokenKey} from '@/http/auth-token'
-import {auth} from '@/plugins/index'
+import {TransError, transform} from './transformer'
+import {auth} from '@/plugins'
 
 let lastUrl: string| null = null
 
@@ -11,8 +10,8 @@ export function req (config: AxiosRequestConfig): any {
   // add timestamp, prevent IE cache
   if (config.method === 'get') config.url = timestampUrl(config.url || '')
   // token auth
-  if (enabled) {
-    config.headers[tokenKey] = getToken()
+  if (auth.tokenEnabled) {
+    config.headers[auth.tokenKey] = auth.token
   }
   return config
   function timestampUrl (url: string) {

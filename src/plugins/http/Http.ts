@@ -1,4 +1,4 @@
-import {AxiosInstance, AxiosInterceptorManager, AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios'
+import {AxiosInstance, AxiosPromise, AxiosRequestConfig} from 'axios'
 
 export default interface Http extends AxiosInstance{
   request<T = any>(config: AxiosRequestConfig): Promise<T>;

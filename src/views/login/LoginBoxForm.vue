@@ -16,7 +16,6 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator'
-import {setToken} from '../../http/auth-token'
 import {login} from '../../api/auth'
 import {AppModule} from '@/store/index'
 
@@ -44,15 +43,15 @@ export default class LoginBoxForm extends Vue {
     this.submit(this.form.username, this.form.password).then(() => {
       const fn = () => { this.loading = false }
       let targetUrl = this.$auth.targetUrl || '/'
-      this.$auth.clear()
       this.$router.push(targetUrl, fn, fn)
     }).catch(() => {
       this.loading = false
     })
   }
   async submit (username: string, password: string) : Promise<any> {
+    this.$auth.clear()
     let token = await login(username, password)
-    if (token) setToken(token)
+    if (token && this.$auth.tokenEnabled) this.$auth.token = token
   }
   valid (): boolean {
     if (!this.form.username.trim()) {

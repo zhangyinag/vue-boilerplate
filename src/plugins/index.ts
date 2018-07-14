@@ -1,15 +1,18 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
-import SvgIcon from './svg/index'
+import SvgIconInstaller from './svg/index'
 import ECharts from 'vue-echarts/components/ECharts.vue'
-import Acl from '@/plugins/auth'
+import authInstaller from '@/plugins/auth'
+import httpInstaller from '@/plugins/http'
 
 export default function install (): void {
   Vue.use(ElementUI)
-  Vue.use(SvgIcon)
-  Vue.use(Acl)
+  Vue.use(SvgIconInstaller)
+  Vue.use(authInstaller)
+  Vue.use(httpInstaller)
   Vue.component('chart', ECharts)
 }
 
 export {auth} from './auth/index'
+export {http} from './http/index'
 

@@ -9,6 +9,10 @@
             <svg-icon icon="dashboard-fill"></svg-icon>
             <span slot="title"> &nbsp;Dashboard</span>
         </el-menu-item>
+        <el-menu-item index="5" @click="$router.push('/user')">
+            <svg-icon icon="avatar"></svg-icon>
+            <span slot="title"> &nbsp;用户管理</span>
+        </el-menu-item>
         <el-submenu index="1">
             <template slot="title">
                 <i class="el-icon-location"></i>
