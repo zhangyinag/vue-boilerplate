@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator'
-import {loadUsers, User} from '../../api/user'
+import {loadUsers, User} from '../../../api/user'
 @Component({
   components: {},
   })
@@ -29,6 +29,6 @@ export default class Dashboard extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/mixins.scss";
-@import "~@/styles/variables.scss";
+@import "../../../styles/mixins";
+@import "../../../styles/variables";
 </style>

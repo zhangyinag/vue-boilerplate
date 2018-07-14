@@ -52,7 +52,7 @@ export default class Home extends Vue {
     flex-grow: 0;
     transition: width .25s ease-in-out;
     @include when(expand){
-      width: $--layout-aside-width-expand;
+      min-width: $--layout-aside-width-expand;
     }
   }
   @include b(layout-main){

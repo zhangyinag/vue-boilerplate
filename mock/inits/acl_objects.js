@@ -12,10 +12,24 @@ const tree = [
         configurable: true
       },
       {
-        pid: 'user',
-        name: 'user',
+        pid: 'system',
+        name: '系统管理',
         description: null,
-        configurable: true
+        configurable: true,
+        children: [
+          {
+            pid: 'user',
+            name: '用户管理',
+            description: null,
+            configurable: true
+          },
+          {
+            pid: 'authority',
+            name: '权限管理',
+            description: null,
+            configurable: true
+          }
+        ]
       }
     ]
   }
@@ -49,11 +63,7 @@ function toArray () {
         configurable: v.configurable,
         parentPid: obj.pid || null
       })
-      if (Array.isArray(v.children) && v.children.length > 0) {
-        v.children.forEach(w => {
-          convert(w)
-        })
-      }
+      convert(v)
     })
   }
 }

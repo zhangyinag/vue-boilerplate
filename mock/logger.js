@@ -13,6 +13,7 @@ module.exports = function (req, res, next) {
   console.info(`method: ${method}`.green)
   if (query) console.log('query: '.green, query)
   if (body) console.log('body: '.green, body)
+  console.log('\n')
   console.groupEnd()
   next()
 }

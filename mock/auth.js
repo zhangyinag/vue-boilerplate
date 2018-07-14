@@ -1,6 +1,6 @@
 const {tokenStorage, enabled, tokenKey} = require('./token-service')
 
-const whiteList = '/login,/logout,/test,/_session,/auth,/auth/acl'
+const whiteList = '/login,/logout,/test,/_session,/auth,/auth/acl,/'
 function onWhiteList (url) {
   return whiteList.split(',').some(v => url.startsWith(v))
 }

@@ -14,16 +14,21 @@ const routes : any = {
   dashboard: 'Dashboard'
 }
 
+interface Item {
+  name: string,
+  path: string
+}
+
 @Component({
   components: {},
   })
 export default class extends Vue {
-  get items (): any {
-    return this.$route.matched.map((v: any) => {
-      if (v.name in routes) return {name: routes[v.name], path: v.path}
-      return null
-    }).filter(v => {
-      return v
+  get items (): Array<Item> {
+    return this.$route.matched.map((v) => {
+      return {
+        name: (v.meta && v.meta.cname) || v.name,
+        path: v.path || '/'
+      }
     })
   }
 }

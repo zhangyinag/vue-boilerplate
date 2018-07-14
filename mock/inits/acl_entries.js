@@ -1,4 +1,5 @@
 module.exports = [
+  // ROLE_USER
   {
     sid: 'ROLE_USER',
     pid: 'home',
@@ -9,11 +10,13 @@ module.exports = [
     pid: 'home.dashboard',
     principal: false
   },
+  // ROLE_OPERATOR
   {
     sid: 'ROLE_OPERATOR',
     pid: 'home',
     principal: false
   },
+  // ROLE_ADMIN
   {
     sid: 'ROLE_ADMIN',
     pid: 'home',
@@ -26,9 +29,20 @@ module.exports = [
   },
   {
     sid: 'ROLE_ADMIN',
-    pid: 'home.user',
+    pid: 'home.system',
     principal: false
   },
+  {
+    sid: 'ROLE_ADMIN',
+    pid: 'home.system.user',
+    principal: false
+  },
+  {
+    sid: 'ROLE_ADMIN',
+    pid: 'home.system.authority',
+    principal: false
+  },
+  // ROLE_ANONYMOUS
   {
     sid: 'ROLE_ANONYMOUS',
     pid: 'home',
