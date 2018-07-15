@@ -56,4 +56,24 @@ module.exports = class users extends Controller {
     const params = req.params || {}
     return this.collection.find(params)
   }
+
+  @Mapping({url: '/users/:username', method: 'delete'})
+  deleteUser (req, res) {
+    const username = req.params.username
+    if (!username) throw new RespError('004', `can not delete user of [${username}]`)
+    let user = this.collection.find({username})[0]
+    if (!user) throw new RespError('004', `can not find user of [${username}]`)
+    this.collection.remove(user)
+  }
+
+  @Mapping({url: '/users/:username', method: 'put'})
+  putUsers (req, res) {
+    let username = req.params.username
+    if (!username) throw new RespError('004', 'params error, username required')
+    let user = this.collection.find({username})[0]
+    if (!user) throw new RespError('500', `not found user [${username}]`)
+    Object.assign(user, req.body)
+    this.collection.update(user)
+    return user
+  }
 }

@@ -51,6 +51,7 @@
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "lokijs": "^1.5.5",
+    "mockjs": "^1.0.1-beta3",
     "node-sass": "^4.9.0",
     "require-all": "^3.0.0",
     "sass-loader": "^7.0.1",

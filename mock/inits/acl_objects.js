@@ -61,11 +61,10 @@ function toArray () {
         name: v.name,
         description: v.description,
         configurable: v.configurable,
-        parentPid: obj.pid || null
+        parentPid: obj._pid || null
       })
       convert(v)
     })
   }
 }
-
 module.exports = toArray()

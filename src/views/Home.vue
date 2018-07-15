@@ -54,9 +54,13 @@ export default class Home extends Vue {
     flex-grow: 0;
     @include when(expand){
       width: $--layout-aside-width-expand;
+      &+.layout-main{
+          width: calc(100% - #{$--layout-aside-width-expand});
+      }
     }
   }
   @include b(layout-main){
+    width: calc(100vw - #{$--layout-aside-width});
     height: inherit;
     flex-grow: 1;
   }
