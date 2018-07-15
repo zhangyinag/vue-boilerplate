@@ -1,12 +1,12 @@
 <template>
-<div class="aside">
+<div class="aside" :class="[{'is-expand': expand}, {'aside-horizon-expand-animation': expand}]">
     <div class="aside__logo" :class="[expand ? 'aside__logo--large' : 'aside__logo--small']">
         <img src="~@/assets/logo.png" @click="$router.push('/')">
     </div>
     <div class="aside__toggle" @click="setAsideExpand(!expand)">
         <svg-icon :icon="expand ? 'outdent' : 'indent'"></svg-icon>
     </div>
-    <app-menu :expand="expand"></app-menu>
+    <app-menu :expand="expand" class="aside__menu"></app-menu>
 </div>
 </template>
 
@@ -24,11 +24,15 @@ export default class AppAside extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~@/styles/mixins.scss";
 @import "~@/styles/variables.scss";
 @import "~@/styles/common.scss";
 @include b(aside){
+    overflow: hidden;
+    @include when(expand) {
+        width: $--layout-aside-width-expand;
+    }
     @include e(logo){
         height: 64px;
         padding-top: 20px;
@@ -59,5 +63,15 @@ export default class AppAside extends Vue {
             color: #fff;
         }
     }
+}
+
+@keyframes aside-horizon-expand-animation
+{
+    from {width: $--layout-aside-width;}
+    to {width: $--layout-aside-width-expand;}
+}
+
+.aside-horizon-expand-animation{
+    animation: aside-horizon-expand-animation 0.5s;
 }
 </style>

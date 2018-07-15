@@ -1,12 +1,14 @@
 <template>
   <div class="layout">
-    <div class="layout-aside" :class="{'is-expand': asideExpand}">
+    <div class="layout-aside horizon-expand-transition" :class="[{'is-expand': asideExpand}]">
       <app-aside :expand="asideExpand"></app-aside>
     </div>
-    <div class="layout-main">
+    <div class="layout-main horizon-expand-transition">
       <div class="layout-header"><app-header></app-header></div>
       <div class="layout-view">
-          <router-view/>
+          <transition name="fade" mode="out-in">
+              <router-view/>
+          </transition>
           <jumbotron v-show="isHome"></jumbotron>
       </div>
       <div class="layout-footer"><p> &nbsp; &nbsp; &nbsp; &nbsp;© 2018-2019 Pingan.com 版权所有 Email: zhangyinag@126.com</p></div>
@@ -50,15 +52,13 @@ export default class Home extends Vue {
     background: $--menu-item-fill;
     width: $--layout-aside-width;
     flex-grow: 0;
-    transition: width .25s ease-in-out;
     @include when(expand){
-      min-width: $--layout-aside-width-expand;
+      width: $--layout-aside-width-expand;
     }
   }
   @include b(layout-main){
     height: inherit;
     flex-grow: 1;
-    transition: width .25s ease-in-out;
   }
   @include b(layout-header) {
     height: $--layout-header-height;
