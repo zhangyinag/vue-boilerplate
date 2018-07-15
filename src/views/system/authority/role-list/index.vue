@@ -40,7 +40,7 @@ export default class RoleList extends Vue {
 @import "~@/styles/variables.scss";
 @include b(role-list){
     margin: 0;
-    padding: 0;
+    padding: 20px 0;
     list-style: no;
     @include e(item) {
         line-height: 36px;

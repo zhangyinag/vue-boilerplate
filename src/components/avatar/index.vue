@@ -6,7 +6,9 @@
            <img class="avatar__img" src="~@/assets/avatar.png" v-show="$auth.isAuthenticated">
         </span>
         <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item divided v-show="$auth.isAuthenticated" class="text-info">{{$auth.user && $auth.user.username}}/未知</el-dropdown-item>
+            <el-dropdown-item divided v-show="$auth.isAuthenticated" class="text-info">
+                {{$auth.user && $auth.user.username}}/{{$auth.user && $auth.user.cname}}
+            </el-dropdown-item>
             <el-dropdown-item divided v-show="!$auth.isAuthenticated" @click.native="$router.push('/login')" class="text-warning">登录/注册</el-dropdown-item>
             <el-dropdown-item divided>个人信息</el-dropdown-item>
             <el-dropdown-item divided @click.native="logout" v-show="$auth.isAuthenticated" class="text-danger">退出</el-dropdown-item>

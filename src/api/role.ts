@@ -24,3 +24,11 @@ export function loadPidsByRoleCode (roleCode: string) {
 export function loadAclObjects () {
   return http.get<Array<AclObject>>('/acl_objects')
 }
+
+export function addAclObject (roleCode: string, pid: string) {
+  return http.post<AclObject>(`/acl_entries/${roleCode}/${pid}`)
+}
+
+export function delAclObject (roleCode: string, pid: string) {
+  return http.delete(`/acl_entries/${roleCode}/${pid}`)
+}

@@ -1,19 +1,24 @@
 <template>
-<div>
-    <el-tree @node-click="onClick"
+<div style="position: relative; padding: 20px;" v-loading="loading">
+    <el-tree @check="onCheck"
              ref="aclTree"
+            check-strictly
             :data="aclObjects"
             show-checkbox
             default-expand-all
             node-key="pid"
             :props="defaultProps">
     </el-tree>
+    <el-button type="text" @click="delayRefresh" style="position: absolute; top: -5px; right: 10px;">
+        <i class="el-icon-refresh" style="font-size: 24px"></i>
+    </el-button>
 </div>
 </template>
 
 <script lang="ts">
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator'
-import {AclObject, loadAclObjects, loadPidsByRoleCode} from '../../../../api/role'
+import {AclObject, addAclObject, delAclObject, loadAclObjects, loadPidsByRoleCode} from '../../../../api/role'
+import {debounce} from 'lodash'
 
 export declare interface AclObjectTree {
   pid: string
@@ -38,23 +43,44 @@ export default class AclTree extends Vue {
     label: 'name'
   }
 
-  onClick () {
-    console.log(arguments)
-  }
+  loading: boolean = false
 
-  @Watch('roleCode')
-  roleCodeChange (roleCode: string) {
+  delayRefresh = debounce(this.refresh, 350)
+
+  loadPids (roleCode: string) {
     if (!roleCode) {
       this.selectedPids = []
       return
     }
+    this.loading = true
     loadPidsByRoleCode(roleCode).then(data => {
       this.selectedPids = (data || [])
       let aclTree: any = this.$refs.aclTree
-      let checkedKeys = computeCheckedKeys(this.selectedPids)
-      console.log(checkedKeys)
-      aclTree.setCheckedKeys(checkedKeys, true)
+      aclTree.setCheckedKeys(this.selectedPids, true)
+      this.loading = false
+    }).catch(err => {
+      this.loading = false
+      console.error(err)
     })
+  }
+
+  refresh () {
+    this.loadPids(this.roleCode)
+  }
+
+  onCheck (item: AclObject, {checkedKeys}) {
+    if (!this.roleCode) return
+    let pid = item.pid
+    if (checkedKeys.includes(pid)) {
+      addAclObject(this.roleCode, pid)
+    } else {
+      delAclObject(this.roleCode, pid)
+    }
+  }
+
+  @Watch('roleCode')
+  roleCodeChange (roleCode: string) {
+    this.loadPids(roleCode)
   }
 
   mounted () {
@@ -85,15 +111,6 @@ function convert (aclObjects: Array<AclObject>, parent?: AclObjectTree): Array<A
     convert(rest, v)
   })
   return nextParents
-}
-
-function computeCheckedKeys (checkedKeys: Array<string>) {
-  if (!Array.isArray(checkedKeys) || checkedKeys.length < 1) return null
-  return checkedKeys.filter(v => {
-    return !checkedKeys.find(w => {
-      return w.startsWith(v) && w !== v
-    })
-  })
 }
 </script>
 

@@ -2,7 +2,7 @@
 <div>
     <el-table
             :data="users"
-            max-height="600"
+            height="635"
             style="width: 100%">
         <el-table-column
                 prop="username"
