@@ -1,58 +1,20 @@
 <template>
 <div>
-    <el-table
-            :data="users"
-            height="635"
-            style="width: 100%">
-        <el-table-column
-                prop="username"
-                label="用户名"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="roles"
-                label="角色"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="cname"
-                label="姓名"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="email"
-                label="邮箱"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="birthDate"
-                label="出生日期"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="address"
-                label="地址"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                fixed="right"
-                label="操作" width="100">
-            <template slot-scope="{row, $index}">
-                <el-button class="text-danger" type="text" size="small" @click.native.prevent="delUser(row.username, $index)">删除</el-button>
-                <el-button class="text-warning" type="text" size="small" @click.native.prevent="editUser(row, $index)">编辑</el-button>
-            </template>
-        </el-table-column>
-    </el-table>
+    <user-query @query="onQuery"></user-query>
+    <user-result :users="users" @del-user="onDelUser" @edit-user="onEditUser"></user-result>
     <user-edit :visible.sync="editVisible" :user="currentEditUser" @edited="onEdited"></user-edit>
 </div>
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator'
-import {deleteUser, loadUsers, User} from '../../../api/user'
+import {Component, Provide, Vue} from 'vue-property-decorator'
+import {deleteUser, loadUsers} from '../../../api/user'
 import UserEdit from './edit/index.vue'
+import UserResult from './result/index.vue'
+import UserQuery, {UserQueryForm} from './query/index.vue'
+import User from '../../../models/User'
 @Component({
-  components: {UserEdit},
+  components: {UserQuery, UserEdit, UserResult},
   })
 export default class Dashboard extends Vue {
   users: Array<User> = [];
@@ -61,13 +23,20 @@ export default class Dashboard extends Vue {
 
   currentEditUser: User| null = null
 
-  delUser (username: string, index: number) {
+  onQuery (userQueryForm: UserQueryForm) {
+    let params = (userQueryForm && userQueryForm.username) ? {username: userQueryForm.username} : undefined
+    loadUsers(params).then(data => {
+      this.users = data || []
+    })
+  }
+
+  onDelUser (username: string, index: number) {
     deleteUser(username).then(() => {
       this.users.splice(index, 1)
     })
   }
 
-  editUser (user: User, index: number) {
+  onEditUser (user: User, index: number) {
     this.currentEditUser = user
     if (!this.currentEditUser) return
     this.editVisible = true
@@ -78,9 +47,7 @@ export default class Dashboard extends Vue {
   }
 
   mounted () {
-    loadUsers().then(data => {
-      this.users = data || []
-    })
+    this.onQuery(null)
   }
 }
 </script>

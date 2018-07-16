@@ -1,9 +1,5 @@
 import {http} from '@/plugins'
-
-export interface User {
-  username: string,
-  roles: Array<string>
-}
+import User from '@/models/User'
 
 export function login (username: string, password: string) {
   return http.post<string>('/login', {username, password})

@@ -25,9 +25,10 @@
 
 <script lang="ts">
 import {Component, Emit, Prop, Vue} from 'vue-property-decorator'
-import {deleteRole, loadRoles, Role} from '../../../../api/role'
+import {deleteRole, loadRoles} from '../../../../api/role'
 import EditAddRole from './edit-add-role/index.vue'
 import {debounce} from 'lodash'
+import Role from '../../../../models/Role'
 
 @Component({
   components: {EditAddRole},

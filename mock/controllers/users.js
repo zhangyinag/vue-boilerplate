@@ -53,7 +53,8 @@ module.exports = class users extends Controller {
 
   @Mapping({url: '/users', method: 'get'})
   getUsers (req, res) {
-    const params = req.params || {}
+    const {username} = req.query
+    const params = username ? {username} : undefined
     return this.collection.find(params)
   }
 
@@ -75,5 +76,14 @@ module.exports = class users extends Controller {
     Object.assign(user, req.body)
     this.collection.update(user)
     return user
+  }
+
+  @Mapping({url: '/users/like/username', method: 'get'})
+  queryUsersLikeUsername (req, res) {
+    const {username} = req.query
+    const all = this.collection.find()
+    return all.filter(v => {
+      return v && (v.username || '').startsWith(username)
+    })
   }
 }

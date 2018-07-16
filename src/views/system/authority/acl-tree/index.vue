@@ -17,8 +17,9 @@
 
 <script lang="ts">
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator'
-import {AclObject, addAclObject, delAclObject, loadAclObjects, loadPidsByRoleCode} from '../../../../api/role'
+import {addAclObject, delAclObject, loadAclObjects, loadPidsByRoleCode} from '../../../../api/role'
 import {debounce} from 'lodash'
+import AclObject from '../../../../models/AclObject'
 
 export declare interface AclObjectTree {
   pid: string
