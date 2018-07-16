@@ -79,11 +79,16 @@ module.exports = class users extends Controller {
   }
 
   @Mapping({url: '/users/like/username', method: 'get'})
-  queryUsersLikeUsername (req, res) {
+  async queryUsersLikeUsername (req, res) {
     const {username} = req.query
     const all = this.collection.find()
-    return all.filter(v => {
+    let result = all.filter(v => {
       return v && (v.username || '').startsWith(username)
     })
+    await new Promise((resolve, reject) => {
+      let delay = Math.floor(Math.random() * 10000)
+      setTimeout(resolve, delay)
+    })
+    return result
   }
 }
