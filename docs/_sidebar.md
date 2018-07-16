@@ -7,6 +7,7 @@
 
   * [安装](guide/install.md)
   * [模拟服务器](guide/mock.md)
+  * [验证插件](guide/auth.md)
 
 * API Reference
 
