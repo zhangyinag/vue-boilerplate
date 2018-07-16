@@ -1,0 +1,13 @@
+// fade
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+
+// aside-expand
+.horizon-expand-transition {
+  transition: width .25s ease-in-out;
+}

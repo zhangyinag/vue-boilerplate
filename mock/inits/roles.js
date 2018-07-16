@@ -10,5 +10,9 @@ module.exports = [
   {
     roleCode: 'ROLE_ADMIN',
     roleName: '管理员'
+  },
+  {
+    roleCode: 'ROLE_ANONYMOUS',
+    roleName: '匿名用户'
   }
 ]

@@ -1,9 +1,8 @@
 import {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios'
 import { message, confirm } from './ui'
 import router from '@/router'
-import {TransError, transform} from '@/http/transformer'
-import {enabled, getToken, tokenKey} from '@/http/auth-token'
-import {auth} from '@/plugins/index'
+import {TransError, transform} from './transformer'
+import {auth} from '@/plugins'
 
 let lastUrl: string| null = null
 
@@ -11,8 +10,8 @@ export function req (config: AxiosRequestConfig): any {
   // add timestamp, prevent IE cache
   if (config.method === 'get') config.url = timestampUrl(config.url || '')
   // token auth
-  if (enabled) {
-    config.headers[tokenKey] = getToken()
+  if (auth.tokenEnabled) {
+    config.headers[auth.tokenKey] = auth.token
   }
   return config
   function timestampUrl (url: string) {
@@ -21,11 +20,11 @@ export function req (config: AxiosRequestConfig): any {
   }
 }
 
-export function reqErr(err: any): any {
+export function reqErr (err: any): any {
   return Promise.reject(err) // do nothing
 }
 
-export function res(response: AxiosResponse): any {
+export function res (response: AxiosResponse): any {
   if (response.status === 200) {
     return transform(response).catch((e: TransError) => {
       if (e.status === 401) {
@@ -40,7 +39,7 @@ export function res(response: AxiosResponse): any {
   }
 }
 
-export function resErr(err: AxiosError): any {
+export function resErr (err: AxiosError): any {
   let res = err && err.response
   if (!res) {
     message(err && err.message)
@@ -50,7 +49,6 @@ export function resErr(err: AxiosError): any {
     message(res.statusText || 'Unknown Error')
   }
   return Promise.reject(err)
-  
 }
 
 let handling = false
@@ -69,7 +67,7 @@ function handleTokenExpired () {
   }
   confirm('登录失效', '是否选择重新登录').then(() => {
     toLogin()
-  }).catch(err => {
+  }).catch(() => {
     handling = false
   })
 

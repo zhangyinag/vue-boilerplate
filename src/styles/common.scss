@@ -1,4 +1,5 @@
 @import "variables";
+@import "animate";
 
 // 标题文字
 .extra-title-text{
@@ -20,4 +21,37 @@
   width: 100%;
   content: " ";
   background: $--border-color-base;
+}
+
+// 文字颜色
+.text-primary{
+  color: $--color-primary;
+}
+
+.text-success{
+  color: $--color-success;
+}
+
+.text-warning{
+  color: $--color-warning;
+}
+
+.text-danger{
+  color: $--color-danger;
+}
+
+.text-info{
+  color: $--color-info;
+}
+
+.text-regular{
+  color: $--color-text-regular;
+}
+
+.text-secondary{
+  color: $--color-text-secondary;
+}
+
+.text-default{
+  color: $--color-text-primary;
 }
