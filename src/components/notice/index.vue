@@ -42,7 +42,10 @@ export default class Notice extends Vue {
 @include b(notice){
     padding: 0 20px;
     @include e(icon){
-        color: $--color-text-regular;
+        color: $--color-info;
+        &:hover{
+            color: $--color-primary;
+        }
     }
 }
 </style>

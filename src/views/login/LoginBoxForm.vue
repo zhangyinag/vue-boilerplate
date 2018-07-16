@@ -2,10 +2,10 @@
     <div class="login-box-form" @keyup.enter="onSubmit">
         <el-form label-position="top">
             <el-form-item label="用户名" style="margin-bottom: 0;">
-                <el-input v-model="form.username" name="username" prefix-icon="el-icon-service" autofocus></el-input>
+                <el-input v-model.trim="form.username" name="username" prefix-icon="el-icon-service" autofocus></el-input>
             </el-form-item>
             <el-form-item label="密码">
-                <el-input v-model="form.password" type="password" name="password" prefix-icon="el-icon-view"></el-input>
+                <el-input v-model.trim="form.password" type="password" name="password" prefix-icon="el-icon-view"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button class="login-box-form__button" type="primary" @click="onSubmit" :loading="loading">登录</el-button>
@@ -16,7 +16,6 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator'
-import {setToken} from '../../http/auth-token'
 import {login} from '../../api/auth'
 import {AppModule} from '@/store/index'
 
@@ -41,18 +40,15 @@ export default class LoginBoxForm extends Vue {
   async onSubmit (): Promise<any> {
     if (!this.valid()) return
     this.loading = true
-    this.submit(this.form.username, this.form.password).then(() => {
+    login(this.form.username, this.form.password).then((token) => {
       const fn = () => { this.loading = false }
       let targetUrl = this.$auth.targetUrl || '/'
       this.$auth.clear()
+      if (token && this.$auth.tokenEnabled) this.$auth.token = token
       this.$router.push(targetUrl, fn, fn)
     }).catch(() => {
       this.loading = false
     })
-  }
-  async submit (username: string, password: string) : Promise<any> {
-    let token = await login(username, password)
-    if (token) setToken(token)
   }
   valid (): boolean {
     if (!this.form.username.trim()) {

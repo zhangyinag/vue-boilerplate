@@ -9,7 +9,27 @@ const tree = [
         pid: 'dashboard',
         name: 'Dashboard',
         description: null,
+        configurable: true
+      },
+      {
+        pid: 'system',
+        name: '系统管理',
+        description: null,
         configurable: true,
+        children: [
+          {
+            pid: 'user',
+            name: '用户管理',
+            description: null,
+            configurable: true
+          },
+          {
+            pid: 'authority',
+            name: '权限管理',
+            description: null,
+            configurable: true
+          }
+        ]
       }
     ]
   }
@@ -41,15 +61,10 @@ function toArray () {
         name: v.name,
         description: v.description,
         configurable: v.configurable,
-        parentPid: obj.pid || null
+        parentPid: obj._pid || null
       })
-      if (Array.isArray(v.children) && v.children.length > 0) {
-        v.children.forEach(w => {
-          convert(w)
-        })
-      }
+      convert(v)
     })
   }
 }
-
 module.exports = toArray()

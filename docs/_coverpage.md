@@ -1,6 +1,6 @@
 ![logo](logo.png ':size=64')
 
-# vue-biolerplate
+# vue-biolerplate doc
 
 > A Vue Web Project starter based on @vue/cli 3.
 

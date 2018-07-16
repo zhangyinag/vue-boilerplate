@@ -5,6 +5,11 @@
     <title>Mock Server Console</title>
     <link rel="stylesheet" href="ui.css">
     <link rel="stylesheet" href="../../node_modules/element-ui/packages/theme-chalk/lib/index.css">
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
 </head>
 <body>
     <div id="app" class="main">
@@ -17,6 +22,7 @@
             </ul>
         </div>
         <div class="content">
+            <pre><code id="hlBlock" v-once>{{expr}}</code></pre>
             <div class="editor">
                 <div style="height: 36px; background: #b4bccc;">
                     <el-button type="text" @click="exec" :disabled="loading">&nbsp;执行</el-button>
@@ -36,8 +42,8 @@
                         border
                         style="width: 100%">
                     <el-table-column v-for="key in keys" :key="key"
-                            :prop="key"
                             :label="key">
+                        <pre slot-scope="{row}"><code class="json">{{row[key]}}</code></pre>
                     </el-table-column>
                 </el-table>
             </div>
@@ -46,6 +52,7 @@
     <script src="../../node_modules/axios/dist/axios.js"></script>
     <script src="../../node_modules/vue/dist/vue.js"></script>
     <script src="../../node_modules/element-ui/lib/index.js"></script>
+    <script>if(hljs)hljs.initHighlightingOnLoad();</script>
     <script src="app.js"></script>
 </body>
 </html>

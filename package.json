@@ -7,12 +7,14 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e"
+    "test:e2e": "vue-cli-service test:e2e",
+    "mock:server": "node mock/index.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.4.3",
     "js-cookie": "^2.2.0",
+    "lodash": "^4.17.10",
     "normalize.css": "^8.0.0",
     "nprogress": "^0.2.0",
     "vue": "^2.5.16",
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "@types/chai": "^4.1.0",
+    "@types/lodash": "^4.14.112",
     "@types/mocha": "^2.2.46",
     "@vue/cli-plugin-babel": "^3.0.0-beta.15",
     "@vue/cli-plugin-e2e-nightwatch": "^3.0.0-rc.2",
@@ -48,6 +51,7 @@
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "lokijs": "^1.5.5",
+    "mockjs": "^1.0.1-beta3",
     "node-sass": "^4.9.0",
     "require-all": "^3.0.0",
     "sass-loader": "^7.0.1",

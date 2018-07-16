@@ -42,6 +42,14 @@ let vm = new Vue({
         this.loading = false
       })
     }
+  },
+  watch: {
+    expr (newVal) {
+      var ele = document.getElementById('hlBlock')
+      ele.innerHTML = ''
+      ele.textContent = newVal
+      if (hljs) hljs.highlightBlock(ele)
+    }
   }
 })
 

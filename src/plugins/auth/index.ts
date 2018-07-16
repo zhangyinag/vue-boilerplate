@@ -1,5 +1,6 @@
 import store from '@/store'
 import {User} from '@/api/auth'
+import {enabled, setToken as setCookieToken, getToken as getCookieToken, tokenKey} from './auth-token'
 
 export function setAcl (acl: Array<string>) {
   const map = new Map()
@@ -19,10 +20,11 @@ export function setUser (user: User| null): void {
 }
 
 export function getUser (): User| null {
-  return (<any>store.state).app.user
+  const state: any = store.state
+  return state.app.user as (User| null)
 }
 
-export function getUsername (): string | null {
+export function getUsername (): string| null {
   const user = getUser()
   return user && user.username
 }
@@ -31,19 +33,31 @@ export function setTargetUrl (url: string| null): void {
   store.commit('app/setTargetUrl', url)
 }
 
-export function authenticate (pid: string): boolean {
+export function getTargetUrl (): string| null {
+  return (<any>store.state).app.targetUrl
+}
+
+export function checkPermission (pid: string): boolean {
   if (!pid) return false
   return getAcl(pid)
 }
 
-export function getTargetUrl (): string| null {
-  return (<any>store.state).app.targetUrl
+export function setToken (token: string| null): void {
+  if (enabled) {
+    store.commit('app/setToken', token)
+    setCookieToken(token)
+  }
+}
+
+export function getToken (): string {
+  return (<any>store.state).app.token || getCookieToken()
 }
 
 export function clear (): void {
   setTargetUrl(null)
   setUser(null)
   setAcl([])
+  setToken(null)
 }
 
 export const auth = {
@@ -65,7 +79,25 @@ export const auth = {
   get acl (): Array<string> {
     return getAcl()
   },
-  authenticate: authenticate,
+  get isAuthenticated (): boolean {
+    return !!getUser()
+  },
+  get currentUrl (): string {
+    return window.location.hash.substr(1)
+  },
+  get token () {
+    return getToken()
+  },
+  set token (token: string| null) {
+    setToken(token)
+  },
+  get tokenKey () {
+    return tokenKey
+  },
+  get tokenEnabled () {
+    return enabled
+  },
+  checkPermission: checkPermission,
   clear: clear
 }
 
