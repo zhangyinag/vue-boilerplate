@@ -14,4 +14,3 @@ export function setToken (token: string| null): void {
   if (!token) Cookie.remove(tokenKey)
   else Cookie.set(tokenKey, token)
 }
-

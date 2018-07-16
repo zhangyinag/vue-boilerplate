@@ -4,7 +4,7 @@
 
 import {http} from '@/plugins'
 
-declare module "vue/types/vue" {
+declare module 'vue/types/vue' {
   interface Vue {
     $http: typeof http
   }

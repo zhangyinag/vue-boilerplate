@@ -5,10 +5,7 @@ module.exports = api => {
   // preset plugins check
   const plugins = [
     "@vue/cli-plugin-babel",
-    "@vue/cli-plugin-eslint",
     "@vue/cli-plugin-typescript",
-    "@vue/eslint-config-standard",
-    "@vue/eslint-config-typescript",
     "node-sass"
   ]
   plugins.forEach(v => {
@@ -42,7 +39,9 @@ module.exports = api => {
     "svg-sprite-loader": "^3.8.0",
     "babel-core": "^6.26.3",
     "express-session": "^1.15.6",
-    "vuex-class": "^0.3.1"
+    "vuex-class": "^0.3.1",
+    "@types/lodash": "^4.14.112",
+    "mockjs": "^1.0.1-beta3"
   }
   const dependencies = {
     "axios": "^0.18.0",
@@ -51,7 +50,8 @@ module.exports = api => {
     "normalize.css": "^8.0.0",
     "nprogress": "^0.2.0",
     "vue": "^2.5.16",
-    "vue-echarts": "^3.0.9"
+    "vue-echarts": "^3.0.9",
+    "lodash": "^4.17.10"
   }
 
   api.extendPackage({

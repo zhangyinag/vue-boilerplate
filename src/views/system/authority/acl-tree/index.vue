@@ -29,14 +29,14 @@ export declare interface AclObjectTree {
 }
 
 @Component({
-  components: {},
+  components : {},
   })
 export default class AclTree extends Vue {
-  @Prop([String]) roleCode: string| null
+  @Prop([String]) roleCode : string | null
 
-  aclObjects: Array<AclObjectTree> = []
+  aclObjects : Array < AclObjectTree > = []
 
-  selectedPids: Array<string> = []
+  selectedPids : Array<string> = []
 
   defaultProps = {
     children: 'children',
@@ -65,13 +65,14 @@ export default class AclTree extends Vue {
   }
 
   refresh () {
+    if (!this.roleCode) return
     this.loadPids(this.roleCode)
   }
 
-  onCheck (item: AclObject, {checkedKeys}) {
+  onCheck (item: AclObject, {checkedKeys}: {checkedKeys: Array<string>}) {
     if (!this.roleCode) return
     let pid = item.pid
-    if (checkedKeys.includes(pid)) {
+    if (checkedKeys.indexOf(pid) !== -1) {
       addAclObject(this.roleCode, pid)
     } else {
       delAclObject(this.roleCode, pid)

@@ -22,4 +22,3 @@ export default new Vuex.Store({
     app
   }
 })
-

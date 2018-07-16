@@ -15,4 +15,3 @@ export default function install (): void {
 
 export {auth} from './auth/index'
 export {http} from './http/index'
-

@@ -38,9 +38,11 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue, Prop, Watch} from 'vue-property-decorator'
+
+import {Component, Prop, Vue} from 'vue-property-decorator'
 import options, {MenuConfig} from './config'
 import {debounce} from 'lodash'
+
 @Component({
   components: {},
   })

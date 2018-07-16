@@ -28,7 +28,6 @@ const emptyForm: Role = {
   components: {},
   })
 export default class EditAddRole extends Vue {
-
   @Prop(Boolean) visible: boolean
 
   @Prop() role: Role| null

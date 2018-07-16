@@ -9,7 +9,7 @@ export const frontGuard: NavigationGuard = function (to, from, next) {
   NP.start()
   if (onWhiteList(to.path)) {
     next()
-    return 
+    return
   }
   init().then(() => {
     if (checkPermission(to.meta && to.meta.pid)) next()
@@ -22,20 +22,20 @@ export const frontGuard: NavigationGuard = function (to, from, next) {
         next({path: '/error/403'})
       }
     }
-  }).catch(err => {
+  }).catch(() => {
     next(false)
     NP.done()
   })
 }
 
-function init(): Promise<any> {
+function init (): Promise<any> {
   try {
     if (auth.isAuthenticated) return Promise.resolve()
     return Promise.all([loadUser(), loadAcl()])
       .then(([user, acl]) => {
-          auth.user = user
-          auth.acl = acl
-        }
+        auth.user = user
+        auth.acl = acl
+      }
       )
   } catch (e) {
     console.error(e)

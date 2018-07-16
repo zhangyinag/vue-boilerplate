@@ -1,11 +1,11 @@
 import {http} from '@/plugins'
 
-export declare interface Role {
+export interface Role {
   roleCode: string,
   roleName: string
 }
 
-export declare interface AclObject {
+export interface AclObject {
   pid: string
   name: string,
   description?: string| null,

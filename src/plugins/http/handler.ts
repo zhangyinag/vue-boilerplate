@@ -20,11 +20,11 @@ export function req (config: AxiosRequestConfig): any {
   }
 }
 
-export function reqErr(err: any): any {
+export function reqErr (err: any): any {
   return Promise.reject(err) // do nothing
 }
 
-export function res(response: AxiosResponse): any {
+export function res (response: AxiosResponse): any {
   if (response.status === 200) {
     return transform(response).catch((e: TransError) => {
       if (e.status === 401) {
@@ -39,7 +39,7 @@ export function res(response: AxiosResponse): any {
   }
 }
 
-export function resErr(err: AxiosError): any {
+export function resErr (err: AxiosError): any {
   let res = err && err.response
   if (!res) {
     message(err && err.message)
@@ -49,7 +49,6 @@ export function resErr(err: AxiosError): any {
     message(res.statusText || 'Unknown Error')
   }
   return Promise.reject(err)
-  
 }
 
 let handling = false
@@ -68,7 +67,7 @@ function handleTokenExpired () {
   }
   confirm('登录失效', '是否选择重新登录').then(() => {
     toLogin()
-  }).catch(err => {
+  }).catch(() => {
     handling = false
   })
 

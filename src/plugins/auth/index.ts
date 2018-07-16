@@ -20,10 +20,11 @@ export function setUser (user: User| null): void {
 }
 
 export function getUser (): User| null {
-  return (<any>store.state).app.user
+  const state: any = store.state
+  return state.app.user as (User| null)
 }
 
-export function getUsername (): string | null {
+export function getUsername (): string| null {
   const user = getUser()
   return user && user.username
 }

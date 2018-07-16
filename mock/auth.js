@@ -2,7 +2,12 @@ const {tokenStorage, enabled, tokenKey} = require('./token-service')
 
 const whiteList = '/login,/logout,/test,/_session,/auth,/auth/acl,/'
 function onWhiteList (url) {
-  return whiteList.split(',').some(v => url.startsWith(v))
+  return whiteList.split(',').some(v => resolveUrl(url) === v)
+  function resolveUrl (url) {
+    if (!url) return '/'
+    let suffixIdx = url.indexOf('?')
+    return url.substr(0, suffixIdx === -1 ? undefined : suffixIdx)
+  }
 }
 
 function checkToken (req) {
