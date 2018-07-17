@@ -23,7 +23,7 @@ export default class Dashboard extends Vue {
 
   currentEditUser: User| null = null
 
-  onQuery (userQueryForm: UserQueryForm) {
+  onQuery (userQueryForm?: UserQueryForm) {
     let params = (userQueryForm && userQueryForm.username) ? {username: userQueryForm.username} : undefined
     loadUsers(params).then(data => {
       this.users = data || []
@@ -47,7 +47,7 @@ export default class Dashboard extends Vue {
   }
 
   mounted () {
-    this.onQuery(null)
+    this.onQuery()
   }
 }
 </script>

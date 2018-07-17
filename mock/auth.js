@@ -1,10 +1,18 @@
 const {tokenStorage, enabled, tokenKey} = require('./token-service')
 
-const whiteList = '/login,/logout,/test/*,/_session/*,/auth/*,/auth/acl,/'
+const whiteList = '/login,/logout,/test,/test/**,/_session/**,/auth,/auth/**,/' // ant style wildcard
 function onWhiteList (url) {
   return whiteList.split(',').some(v => {
     let pureUrl = resolveUrl(url)
-    return new RegExp(v).test(pureUrl)
+    const convertRegEx = (expr) => {
+      return new RegExp('^' +
+        (expr || '')
+          .replace(/\*\*/g, '#__#')
+          .replace(/\*/g, '[^/]*')
+          .replace(/#__#/g, '.*') +
+        '$')
+    }
+    return convertRegEx(v).test(pureUrl)
   })
   function resolveUrl (url) {
     if (!url) return '/'
