@@ -12,6 +12,9 @@
                 prop="roles"
                 label="角色"
                 width="180">
+            <template slot-scope="{row, $index}">
+                {{row.roles}}
+            </template>
         </el-table-column>
         <el-table-column
                 prop="cname"

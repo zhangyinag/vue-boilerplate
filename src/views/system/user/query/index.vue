@@ -22,6 +22,8 @@
 <script lang="ts">
 import {Component, Emit, Vue} from 'vue-property-decorator'
 import {queryUsersLikeUsername} from '../../../../api/user'
+import User from '../../../../models/User'
+import {getFlatSubject} from '@/util'
 
 export class UserQueryForm {
   username = ''
@@ -33,12 +35,24 @@ export class UserQueryForm {
 export default class UserQuery extends Vue {
   form = new UserQueryForm()
 
+  flatObject = getFlatSubject<User>(this.getQueryResult)
+
+  cb?: Function
+
   @Emit()query (userqueryForm: UserQueryForm) {}
 
   querySearch (qs: string, cb: Function) {
-    queryUsersLikeUsername(qs).then(data => {
-      cb(data || [])
-    })
+    this.cb = cb
+    this.flatObject.fire(queryUsersLikeUsername(qs))
+
+    // no flat object invoke, remained these for demo
+    // queryUsersLikeUsername(qs).then(data => {
+    //   cb(data)
+    // })
+  }
+
+  getQueryResult (data: User) {
+    if (this.cb) this.cb(data)
   }
 
   handleSelect (item: {username: string, cname: string}) {
