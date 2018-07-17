@@ -8,6 +8,8 @@
   * [安装](guide/install.md)
   * [模拟服务器](guide/mock.md)
   * [验证插件](guide/auth.md)
+  * [Http插件](guide/http.md)
+  * [svg插件](guide/svg.md)
 
 * API Reference
 

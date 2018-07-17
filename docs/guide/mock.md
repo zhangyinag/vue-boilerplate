@@ -102,7 +102,7 @@
 异地同时登录）
 
 你可以在`auth.js`下修改配置：
-- `whiteList` 白名单
+- `whiteList` 白名单, 支持ant风格通配符
 - `simpleCheck` 默认token验证策略
 
 你可以在`token-service.js`下启用或关闭`token`功能、配置`tokenKey`等

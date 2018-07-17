@@ -7,7 +7,7 @@
 
 用户：
 
-```json
+```js
     {
         username: 'user',
         roles: ['ROLE_USER']
@@ -16,7 +16,7 @@
 
 角色：
 
-```json
+```js
     {
         roleCode: 'ROLE_ADMIN',
         roleName: '管理员'
@@ -25,7 +25,7 @@
 
 资源：
 
-```json
+```js
    {
        pid: 'home',
        name: '首页',
@@ -37,153 +37,100 @@
 
 **如果一个用户没有登录， 将拥有 `ROLE_ANONYMOUS`角色的权限**
 
-1. 跨域场景
-2. token 验证场景
-3. session验证场景
-4. 数据持久化
-5. 统一错误处理
-6. 异步返回支持
+视图与路由都是资源（菜单作为视图的一种）， 默认对菜单与路由设置了权限控制：
+1. 菜单的权限控制
+ 菜单使用json数据创建， 见 `components/menu/config.ts` :
 
-使用 `lokijs` 作为内存数据库，借助装饰器实现  `Java SpringMvc` 风格的路由注册，
-基于 `Restful` 风格构建路由结构， 每个控制器代表一个实体，并会自动创建一个相同名
-称的集合，并将使用 `/inits`目录下的同名js文件作为初始化数据
-
-## 创建模拟数据
-
-1. 创建控制器(数据实体) 在`/controllers`目录下创建文件`books.js`
-
-```js
-    const Controller = require('../Controller')
-    const Mapping = require('../Mapping')
-    const RespError = require('../RespError')
-
-    module.exports = class books extends Controller {
-      @Mapping({url: '/books', method: 'get'})
-      getRoles (req, res) {
-        return this.collection.find()
+ ```js
+    {
+        name: 'Dashboard',
+        icon: 'dashboard',
+        pid: 'home.dashboard',
+        link: '/dashboard'
       }
-    }
-```
+ ```
 
-2. 创建初始化数据 在`/inits`目录下创建文件`books.js`
+ 指定`pid`即可
 
-```js
-    module.exports = [
-      {
-        bookId: 001,
-        bookName: 'Angular Guide'
-      },
-       {
-          bookId: 002,
-          bookName: 'Vue Guide'
-        },
-    ]
+2. 路由的权限控制
+    在路由的元数据中添加`pid`, 见`router/routes.ts`
 
-```
-
-*你可以在这里执行任何数据初始化代码，只要确保导出一个数组对象即可*
-
-
-## 异步返回
-
-  使用`async`异步返回
-
-```js
-   async getAsync (req, res) {
-    // TODO
-   }
-
-```
-
-## 返回对象定制
-
-  大部分应用都会对返回数据进行封装， 你可以在`transformer.js`中定制你的返回格式，
-  默认如下：
-
-```js
-   module.exports = function transform (data, code, errMsg) {
-     return {
-       data: data,
-       resultCode: code || '000000',
-       resultMesg: errMsg
+ ```js
+    {
+       path: 'dashboard',
+       name: 'dashboard',
+       component: Dashboard,
+       meta: {pid: 'home.dashboard', cname: '仪表盘'}
      }
-   }
+ ```
 
-```
+ ## 流程
 
- 你可以使用 `RespError` 抛出异常，该异常将会转换成一个返回对象:
+ ### 登录流程
 
-```js
-   throw new RespError('001', '用户名不能为空', null)
-```
+ 见 `views/login/LoginBoxForm.vue`
+ 1. 输入用户名及密码
+ 2. 获取上次未授权目标地址
+ 3. 清空上次认证信息(user, token, targetUrl, acl)
+ 4. 检查是否开启了`token`验证，如果开启，默认登录的返回的结果为`token`,
+ 存储token值
+ 5. 检查上次未授权目标地址是否为空，不为空跳转到地址，否则跳转到首页
 
-## 跨域处理
+ ### 授权流程
 
- 你可以在 `cors.js` 文件中改变跨域策略， 默认如下：
+ 见`router/front-guard.ts`
+ 1. 输入任意 `url`, 路由守卫判断该地址是否在白名单
+ 2. 判断用户是否登录过，没有登录则先获取权限列表
+ 3. 判断是否拥有目标地址的权限
+ 4. 再次判断是否登录，没有登录则先保存目标地址， 跳转到登录页面
+ 若已经登录，则跳转到 `401`页面
 
-```js
-     res.header('Access-Control-Allow-Origin', origin)
-     res.header('Access-Control-Allow-Methods','PUT,POST,GET,DELETE,PATCH,OPTIONS')
-     res.header('Access-Control-Allow-Headers', 'Content-Type' + tokenHeader())
-     res.header('Access-Control-Allow-Credentials', 'true')
-```
+ ## $auth 对象
 
-## 验证
+ 可以在vue实例上访问`$auth`获取验证相关的方法与属性：
 
-默认采用`session` 做️登录验证， 你也可以开启`token`验证，来实现一些安全策略，
-默认开启`token`验证， 默认策略：该用户客户端的`token`与服务的`token`不一致，
-验证失败；（目的是用于解决用一个浏览器交叉使用两个账号串号问题，同时也禁止了
-异地同时登录）
-
-你可以在`auth.js`下修改配置：
-- `whiteList` 白名单
-- `simpleCheck` 默认token验证策略
-
-你可以在`token-service.js`下启用或关闭`token`功能、配置`tokenKey`等
-
-## 数据模拟工具
-
-建议配合`mockjs`模拟数据， 实例:
-
-```js
-     const Mock = require('mockjs')
-     const Roles = ['ROLE_USER', 'ROLE_OPERATOR', 'ROLE_ADMIN', 'ROLE_ANONYMOUS']
-     let data = Mock.mock({
-       'list|1-10': [{
-         username: '@first',
-         roles: () => { return [Roles[Math.floor(Math.random() * 5) % 4]] },
-         cname: '@cname',
-         email: '@email',
-         birthDate: '@date("yyyy/MM/dd")',
-         address: '@county(true)'
-       }]
-     }).list
-     module.exports = [
-       {
-         username: 'user',
-         roles: ['ROLE_USER'],
-         cname: '普通用户'
+  ```js
+     export const auth = {
+       set targetUrl (url: string| null) {
+         setTargetUrl(url)
        },
-       {
-         username: 'operator',
-         roles: ['ROLE_OPERATOR'],
-         cname: '运营人员'
+       get targetUrl (): string| null {
+         return getTargetUrl()
        },
-       {
-         username: 'admin',
-         roles: ['ROLE_ADMIN'],
-         cname: '管理员'
+       set user (user: User| null) {
+         setUser(user)
        },
-       {
-         username: 'root',
-         roles: ['ROLE_USER', 'ROLE_OPERATOR', 'ROLE_ADMIN'],
-         cname: '超级用户'
-       }
-     ].concat(data)
+       get user (): User| null {
+         return getUser()
+       },
+       set acl (acl: Array<string>) {
+         setAcl(acl)
+       },
+       get acl (): Array<string> {
+         return getAcl()
+       },
+       get isAuthenticated (): boolean {
+         return !!getUser()
+       },
+       get currentUrl (): string {
+         return window.location.hash.substr(1)
+       },
+       get token () {
+         return getToken()
+       },
+       set token (token: string| null) {
+         setToken(token)
+       },
+       get tokenKey () {
+         return tokenKey
+       },
+       get tokenEnabled () {
+         return enabled
+       },
+       checkPermission: checkPermission,
+       clear: clear
+     }
+  ```
 
-```
-
-## UI
-
-默认提供了一个简易的UI控制台，打开`ui/index.html`
-
+?> 应该始终从该`$auth`上进行验证相关的操作，
+    虽然你可能知道这些数据是存放在`vuex`中
