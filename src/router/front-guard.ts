@@ -3,7 +3,7 @@ import {auth} from '@/plugins'
 import {loadAcl, loadUser} from '@/api/auth'
 import NP from 'nprogress'
 
-const whiteList = ['/login', '/error']
+const whiteList = ['/login', '/error'] // ant style wildcat
 
 export const frontGuard: NavigationGuard = function (to, from, next) {
   NP.start()
@@ -49,5 +49,13 @@ function checkPermission (pid: string): boolean {
 }
 
 function onWhiteList (path: string) {
-  return whiteList.some(v => path.startsWith(v))
+  const convertRegEx = (expr: string) => {
+    return new RegExp('^' +
+      (expr || '')
+        .replace(/\*\*/g, '#__#')
+        .replace(/\*/g, '[^/]*')
+        .replace(/#__#/g, '.*') +
+      '$')
+  }
+  return whiteList.some(v => convertRegEx(v).test(path))
 }

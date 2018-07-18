@@ -43,6 +43,7 @@ export default class Feedback extends Vue {
 $--feed-background-color: #f4364c;
 @include b(feedback){
     position: fixed;
+    z-index: 2000;
     bottom: 120px;
     right: 0;
     height: 48px;
@@ -52,7 +53,7 @@ $--feed-background-color: #f4364c;
     border-radius: 4px 0 0 4px;
     box-shadow: -1px 1px 5px lighten($--feed-background-color, 25%);
     &:hover{
-        transform:scaleX(1.2);
+        transform:scaleY(1.1);
     }
 }
 </style>

@@ -53,7 +53,8 @@ module.exports = class users extends Controller {
 
   @Mapping({url: '/users', method: 'get'})
   getUsers (req, res) {
-    const params = req.params || {}
+    const {username} = req.query
+    const params = username ? {username} : undefined
     return this.collection.find(params)
   }
 
@@ -75,5 +76,19 @@ module.exports = class users extends Controller {
     Object.assign(user, req.body)
     this.collection.update(user)
     return user
+  }
+
+  @Mapping({url: '/users/like/username', method: 'get'})
+  async queryUsersLikeUsername (req, res) {
+    const {username} = req.query
+    const all = this.collection.find()
+    let result = all.filter(v => {
+      return v && (v.username || '').startsWith(username)
+    })
+    await new Promise((resolve, reject) => {
+      let delay = 0 // Math.floor(Math.random() * 10000)
+      setTimeout(resolve, delay)
+    })
+    return result
   }
 }

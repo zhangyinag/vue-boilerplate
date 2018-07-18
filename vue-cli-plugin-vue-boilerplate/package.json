@@ -1,6 +1,6 @@
 {
   "name": "vue-cli-plugin-vue-boilerplate",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "vue cli plugin of vue-boilerplate",
   "main": "index.js",
   "scripts": {

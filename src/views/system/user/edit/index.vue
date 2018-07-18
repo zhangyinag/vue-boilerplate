@@ -36,8 +36,10 @@
 
 <script lang="ts">
 import {Component, Emit, Prop, Vue, Watch} from 'vue-property-decorator'
-import {User, putUser} from '@/api/user'
-import {loadRoles, Role} from '@/api/role'
+import {putUser} from '@/api/user'
+import {loadRoles} from '@/api/role'
+import Role from '../../../../models/Role'
+import User from '../../../../models/User'
 const emptyForm: User = {
   username: '',
   roles: [],

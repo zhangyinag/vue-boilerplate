@@ -17,7 +17,8 @@
 
 <script lang="ts">
 import {Component, Emit, Prop, Vue, Watch} from 'vue-property-decorator'
-import {addRole, putRole, Role} from '../../../../../api/role'
+import {addRole, putRole} from '../../../../../api/role'
+import Role from '../../../../../models/Role'
 
 const emptyForm: Role = {
   roleCode: '',

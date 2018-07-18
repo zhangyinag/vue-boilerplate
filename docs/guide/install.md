@@ -1,41 +1,13 @@
 # 安装
 
-## 在已有项目上安装
 
-该模板使用了 `typescript`, `vuex`, `vue-router`, `sass`, 'babel', `eslint standard`
-请在安装了以上官方插件后再安装该插件
-
- **Make sure you install these official plugins first, the `.vuerc` reference below**
-
-``` json
-{
-  "useTaobaoRegistry": true,
-  "presets": {
-    "vue-boilerplate": {
-      "useConfigFiles": true,
-      "plugins": {
-        "@vue/cli-plugin-babel": {},
-        "@vue/cli-plugin-typescript": {
-          "classComponent": true,
-          "useTsWithBabel": true
-        },
-        "@vue/cli-plugin-eslint": {
-          "config": "standard",
-          "lintOn": [
-            "save"
-          ]
-        },
-        "@vue/cli-plugin-unit-mocha": {}
-      },
-      "router": true,
-      "vuex": true,
-      "cssPreprocessor": "sass"
-    }
-  }
-
+``` sh
+vue invoke vue-cli-plugin-vue-boilerplate
 ```
 
-**Note: `unit test` and `e2e test` are optional, you can install them when you need it**
+**该模板使用了 `typescript`, `vuex`, `vue-router`, `sass`, `babel`
+请在安装了以上官方插件后再安装该插件**
+
 
 ## 注入命令
 
@@ -52,3 +24,23 @@
 
     none
   ```
+
+## 文件说明
+
+`/mock` 模拟服务模块
+ - `/mock/ui` 本地UI界面， 方便查看当前模拟数据库数据， 并可以执行`CRUD`操作
+
+`/src/api` api接口
+
+`/src/plugins` vue插件结合
+ - `auth` 认证授权插件
+ - `http` http插件
+ - `svg` svg-icon插件
+
+`/src/router` 路由相关
+
+`/src/store` vuex相关
+
+
+
+

@@ -1,4 +1,4 @@
-import {User} from '@/api/auth'
+import User from '@/models/User'
 
 interface State {
   asideExpand: boolean,

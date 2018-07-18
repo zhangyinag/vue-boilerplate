@@ -1,6 +1,6 @@
 import store from '@/store'
-import {User} from '@/api/auth'
 import {enabled, setToken as setCookieToken, getToken as getCookieToken, tokenKey} from './auth-token'
+import User from '@/models/User'
 
 export function setAcl (acl: Array<string>) {
   const map = new Map()
@@ -20,7 +20,7 @@ export function setUser (user: User| null): void {
 }
 
 export function getUser (): User| null {
-  const state: any = store.state
+  const state = store.state as any
   return state.app.user as (User| null)
 }
 

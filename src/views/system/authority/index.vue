@@ -9,7 +9,7 @@
 import {Component, Vue} from 'vue-property-decorator'
 import RoleList from './role-list/index.vue'
 import AclTree from './acl-tree/index.vue'
-import {Role} from '../../../api/role'
+import Role from '../../../models/Role'
 
 @Component({
   components: {RoleList, AclTree},
