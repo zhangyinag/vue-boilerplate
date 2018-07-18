@@ -82,7 +82,7 @@ export default class AppMenu extends Vue {
     return String(args.reduce((result, v) => result + '-' + v))
   }
   open (url: string): void {
-    this.$router.push({path: url, query: {_t: String(Date.now())}})
+    this.$router.push({path: url})
   }
   filterByAcl (items: Array<MenuConfig>): Array<MenuConfig> {
     if (!Array.isArray(items) || items.length < 1) return []

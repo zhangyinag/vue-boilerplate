@@ -86,7 +86,7 @@ module.exports = class users extends Controller {
       return v && (v.username || '').startsWith(username)
     })
     await new Promise((resolve, reject) => {
-      let delay = Math.floor(Math.random() * 10000)
+      let delay = 0 // Math.floor(Math.random() * 10000)
       setTimeout(resolve, delay)
     })
     return result

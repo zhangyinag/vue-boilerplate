@@ -5,7 +5,7 @@
 vue invoke vue-cli-plugin-vue-boilerplate
 ```
 
-**该模板使用了 `typescript`, `vuex`, `vue-router`, `sass`, 'babel'
+**该模板使用了 `typescript`, `vuex`, `vue-router`, `sass`, `babel`
 请在安装了以上官方插件后再安装该插件**
 
 
