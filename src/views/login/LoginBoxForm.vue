@@ -42,7 +42,13 @@ export default class LoginBoxForm extends Vue {
     this.loading = true
     login(this.form.username, this.form.password).then((token) => {
       const fn = () => { this.loading = false }
-      let targetUrl = this.$auth.targetUrl || '/'
+      let targetUrl = '/'
+      if (this.$auth.targetUrl) {
+        if (!this.$auth.user) {
+          targetUrl = this.$auth.targetUrl
+        }
+        if (this.$auth.user && this.$auth.user.username === this.form.username) targetUrl = this.$auth.targetUrl
+      }
       this.$auth.clear()
       if (token && this.$auth.tokenEnabled) this.$auth.token = token
       this.$router.push(targetUrl, fn, fn)

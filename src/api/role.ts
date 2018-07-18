@@ -1,17 +1,6 @@
 import {http} from '@/plugins'
-
-export interface Role {
-  roleCode: string,
-  roleName: string
-}
-
-export interface AclObject {
-  pid: string
-  name: string,
-  description?: string| null,
-  configurable?: boolean,
-  parentPid?: string| null
-}
+import Role from '@/models/Role'
+import AclObject from '@/models/AclObject'
 
 export function loadRoles () {
   return http.get<Array<Role>>('/roles')

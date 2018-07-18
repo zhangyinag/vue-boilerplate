@@ -1,16 +1,8 @@
 import {http} from '@/plugins'
+import User from '@/models/User'
 
-export interface User {
-  username: string
-  roles: Array<string>
-  cname?: string
-  email?: string
-  birthDate?: string
-  address?: string
-}
-
-export function loadUsers () {
-  return http.get<Array<User>>('/users')
+export function loadUsers (params?: {username: string}) {
+  return http.get<Array<User>>('/users', {params: params})
 }
 
 export function deleteUser (username: string) {
@@ -19,4 +11,8 @@ export function deleteUser (username: string) {
 
 export function putUser (user: User) {
   return http.put<User>(`/users/${user.username}`, user)
+}
+
+export function queryUsersLikeUsername (username?: string) {
+  return http.get<User>(`/users/like/username`, {params: {username}})
 }
